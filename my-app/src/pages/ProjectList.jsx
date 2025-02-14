@@ -153,21 +153,19 @@ function ProjectList() {
                   <h3 className="text-xl font-semibold text-gray-900">API Documentation</h3>
                 </div>
                 <div className="p-6 bg-white">
-                  <div className="space-y-6">
-                    <div className="border rounded-lg overflow-hidden">
-                      <div className="bg-gray-50 px-4 py-2 border-b">
-                        <h4 className="text-lg font-medium">Endpoints</h4>
-                      </div>
-                      <div className="p-4">
-                        <pre className="whitespace-pre-wrap text-sm">
-                          {selectedProject.apiDocs?.replace(/```|##+|\\n/g, '').split('\n').map((line, i) => (
-                            <div key={i} className="py-1">
-                              {line.trim()}
-                            </div>
-                          ))}
-                        </pre>
-                      </div>
-                    </div>
+                  <div className="prose max-w-none">
+                    <div 
+                      className="markdown-content" 
+                      dangerouslySetInnerHTML={{ 
+                        __html: marked(selectedProject.apiDocs || 'No API documentation available', {
+                          breaks: true,
+                          gfm: true,
+                          highlight: function(code) {
+                            return code;
+                          }
+                        })
+                      }} 
+                    />
                   </div>
                 </div>
               </div>
@@ -177,21 +175,19 @@ function ProjectList() {
                   <h3 className="text-xl font-semibold text-gray-900">Application Flow</h3>
                 </div>
                 <div className="p-6 bg-white">
-                  <div className="space-y-6">
-                    <div className="border rounded-lg overflow-hidden">
-                      <div className="bg-gray-50 px-4 py-2 border-b">
-                        <h4 className="text-lg font-medium">Application Flow</h4>
-                      </div>
-                      <div className="p-4">
-                        <pre className="whitespace-pre-wrap text-sm">
-                          {selectedProject.flowDoc?.replace(/```|##+|\\n/g, '').split('\n').map((line, i) => (
-                            <div key={i} className="py-1">
-                              {line.trim()}
-                            </div>
-                          ))}
-                        </pre>
-                      </div>
-                    </div>
+                  <div className="prose max-w-none">
+                    <div 
+                      className="markdown-content" 
+                      dangerouslySetInnerHTML={{ 
+                        __html: marked(selectedProject.flowDoc || 'No flow documentation available', {
+                          breaks: true,
+                          gfm: true,
+                          highlight: function(code) {
+                            return code;
+                          }
+                        })
+                      }} 
+                    />
                   </div>
                 </div>
               </div>
