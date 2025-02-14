@@ -150,24 +150,18 @@ function ProjectList() {
                 <div className="bg-gray-50 px-6 py-4 border-b">
                   <h3 className="text-xl font-semibold text-gray-900">API Documentation</h3>
                 </div>
-                <div 
-                  className="prose prose-lg max-w-none p-6 bg-white"
-                  dangerouslySetInnerHTML={{ 
-                    __html: marked(selectedProject.apiDocs || 'No API documentation available') 
-                  }}
-                />
+                <div className="p-6 bg-white whitespace-pre-wrap font-mono text-sm">
+                  {selectedProject.apiDocs || 'No API documentation available'}
+                </div>
               </div>
 
               <div className="border rounded-lg overflow-hidden">
                 <div className="bg-gray-50 px-6 py-4 border-b">
                   <h3 className="text-xl font-semibold text-gray-900">Application Flow</h3>
                 </div>
-                <div 
-                  className="prose prose-lg max-w-none p-6 bg-white"
-                  dangerouslySetInnerHTML={{ 
-                    __html: marked(selectedProject.flowDoc || 'No flow documentation available') 
-                  }}
-                />
+                <div className="p-6 bg-white whitespace-pre-wrap font-mono text-sm">
+                  {selectedProject.flowDoc || 'No flow documentation available'}
+                </div>
               </div>
             </div>
           </div>
