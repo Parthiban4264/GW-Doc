@@ -160,9 +160,10 @@ function ProjectList() {
                         __html: marked(selectedProject.apiDocs || 'No API documentation available', {
                           breaks: true,
                           gfm: true,
-                          highlight: function(code) {
-                            return code;
-                          }
+                          highlight: function(code, lang) {
+                            return `<pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto"><code class="language-${lang || 'text'}">${code}</code></pre>`;
+                          },
+                          langPrefix: 'language-'
                         })
                       }} 
                     />
@@ -182,9 +183,10 @@ function ProjectList() {
                         __html: marked(selectedProject.flowDoc || 'No flow documentation available', {
                           breaks: true,
                           gfm: true,
-                          highlight: function(code) {
-                            return code;
-                          }
+                          highlight: function(code, lang) {
+                            return `<pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto"><code class="language-${lang || 'text'}">${code}</code></pre>`;
+                          },
+                          langPrefix: 'language-'
                         })
                       }} 
                     />
