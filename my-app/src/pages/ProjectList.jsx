@@ -154,19 +154,16 @@ function ProjectList() {
                 </div>
                 <div className="p-6 bg-white">
                   <div className="prose max-w-none">
-                    <div 
-                      className="markdown-content" 
-                      dangerouslySetInnerHTML={{ 
-                        __html: marked(selectedProject.apiDocs || 'No API documentation available', {
-                          breaks: true,
-                          gfm: true,
-                          highlight: function(code, lang) {
-                            return `<pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto"><code class="language-${lang || 'text'}">${code}</code></pre>`;
-                          },
-                          langPrefix: 'language-'
-                        })
-                      }} 
-                    />
+                    <div className="markdown-content">
+                      <MarkdownEditor
+                        value={selectedProject.apiDocs || 'No API documentation available'}
+                        renderHTML={text => marked(text)}
+                        view={{ menu: false, md: false, html: true }}
+                        canView={{ menu: false, md: false, html: true }}
+                        readOnly={true}
+                        style={{ border: 'none' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -177,19 +174,16 @@ function ProjectList() {
                 </div>
                 <div className="p-6 bg-white">
                   <div className="prose max-w-none">
-                    <div 
-                      className="markdown-content" 
-                      dangerouslySetInnerHTML={{ 
-                        __html: marked(selectedProject.flowDoc || 'No flow documentation available', {
-                          breaks: true,
-                          gfm: true,
-                          highlight: function(code, lang) {
-                            return `<pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto"><code class="language-${lang || 'text'}">${code}</code></pre>`;
-                          },
-                          langPrefix: 'language-'
-                        })
-                      }} 
-                    />
+                    <div className="markdown-content">
+                      <MarkdownEditor
+                        value={selectedProject.flowDoc || 'No flow documentation available'}
+                        renderHTML={text => marked(text)}
+                        view={{ menu: false, md: false, html: true }}
+                        canView={{ menu: false, md: false, html: true }}
+                        readOnly={true}
+                        style={{ border: 'none' }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
