@@ -1,0 +1,27 @@
+.aider*
+# Ignore environment files (API keys, secrets, configurations)
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+# Ignore node_modules (dependencies)
+node_modules/
+node_modules/*
+
+# Ignore build files
+dist/
+build/
+
+# Ignore logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ignore editor and OS-specific files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
