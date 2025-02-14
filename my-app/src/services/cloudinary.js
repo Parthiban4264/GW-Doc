@@ -10,7 +10,7 @@ const uploadImageToCloudinary = async (file) => {
     // Create form data
     const formData = new FormData();
     formData.append("file", base64Data);
-    formData.append("upload_preset", "ml_default");
+    formData.append("upload_preset", "gw_doc"); // Changed to your custom upload preset
     formData.append("cloud_name", "drj0wvueq");
 
     // Upload to Cloudinary using fetch
