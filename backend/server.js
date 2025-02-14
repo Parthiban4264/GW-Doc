@@ -5,6 +5,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const projectRoutes = require('./routes/projects');
 const uploadRoutes = require('./routes/uploads');
+const exportRoutes = require('./routes/export');
 const Database = require('./db');
 
 const app = express();
@@ -39,6 +40,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Routes
 app.use('/api/projects', projectRoutes);
 app.use('/api/uploads', uploadRoutes);
+app.use('/api/export', exportRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

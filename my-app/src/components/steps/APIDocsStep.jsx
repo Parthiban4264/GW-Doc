@@ -55,11 +55,31 @@ ${nextScreen ? `- Next screen: ${nextScreen.name}` : '- Exit point'}
     setMarkdown(text);
   };
 
-  const handleExport = (format) => {
-    const filename = `api-documentation.${format}`;
-    const content = format === 'md' ? markdown : marked(markdown);
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    saveAs(blob, filename);
+  const handleExport = async (format) => {
+    if (format === 'pdf') {
+      const content = marked(markdown);
+      const file = { content, name: 'api-documentation.pdf' };
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/export/pdf', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ html: content }),
+        });
+        
+        const blob = await response.blob();
+        saveAs(blob, 'api-documentation.pdf');
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+      }
+    } else {
+      const filename = `api-documentation.${format}`;
+      const content = format === 'md' ? markdown : marked(markdown);
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      saveAs(blob, filename);
+    }
   };
 
   return (
@@ -111,6 +131,12 @@ ${nextScreen ? `- Next screen: ${nextScreen.name}` : '- Exit point'}
             className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
           >
             Export as HTML
+          </button>
+          <button
+            onClick={() => handleExport('pdf')}
+            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+          >
+            Export as PDF
           </button>
           <button
             onClick={() => {
