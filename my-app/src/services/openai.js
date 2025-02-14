@@ -1,11 +1,30 @@
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
-export const generateRequirementsFromDescription = async (screenName, description, imageBase64) => {
+export const generateRequirementsFromDescription = async (screenName, description, imageBase64 = null) => {
   try {
-    // Remove data URL prefix if present
-    const base64Image = imageBase64.replace(/^data:image\/[a-z]+;base64,/, '');
-    
+    const messages = [
+      {
+        role: "system",
+        content: "You are a technical requirements analyst. Generate detailed requirements for UI screens based on descriptions and images."
+      },
+      {
+        role: "user",
+        content: imageBase64 ? [
+          {
+            type: "text",
+            text: `Generate detailed requirements for a screen named "${screenName}" with this description: "${description}". Include sections for Purpose, User Actions, Technical Requirements, Data Requirements, Validation Rules, and Error Handling.`
+          },
+          {
+            type: "image_url",
+            image_url: {
+              url: imageBase64.startsWith('data:') ? imageBase64 : `data:image/jpeg;base64,${imageBase64}`
+            }
+          }
+        ] : `Generate detailed requirements for a screen named "${screenName}" with this description: "${description}". Include sections for Purpose, User Actions, Technical Requirements, Data Requirements, Validation Rules, and Error Handling.`
+      }
+    ];
+
     const response = await fetch(OPENAI_API_URL, {
       method: "POST",
       headers: {
@@ -14,27 +33,7 @@ export const generateRequirementsFromDescription = async (screenName, descriptio
       },
       body: JSON.stringify({
         model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: "You are a technical requirements analyst. Generate detailed requirements for UI screens based on descriptions and images."
-          },
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: `Generate detailed requirements for a screen named "${screenName}" with this description: "${description}". Include sections for Purpose, User Actions, Technical Requirements, Data Requirements, Validation Rules, and Error Handling.`
-              },
-              {
-                type: "image_url",
-                image_url: {
-                  url: `data:image/jpeg;base64,${base64Image}`
-                }
-              }
-            ]
-          }
-        ],
+        messages,
         max_tokens: 4096
       }),
     });
