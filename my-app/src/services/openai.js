@@ -13,7 +13,7 @@ export const generateRequirementsFromDescription = async (screenName, descriptio
         Authorization: `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-4-1106-vision-preview",
+        model: "gpt-4o",
         messages: [
           {
             role: "system",
