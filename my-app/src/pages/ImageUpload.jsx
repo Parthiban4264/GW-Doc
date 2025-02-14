@@ -15,24 +15,38 @@ function ImageUpload() {
     setProject(currentProject);
   }, [projectId, projects]);
 
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+
   const handleDrop = async (acceptedFiles) => {
+    setIsUploading(true);
+    setUploadError(null);
+    
     try {
       const uploadPromises = acceptedFiles.slice(0, 20).map(async (file) => {
-        const cloudinaryUrl = await uploadImageToCloudinary(file);
-        return {
-          id: Date.now().toString(),
-          name: file.name,
-          size: file.size,
-          preview: cloudinaryUrl,
-          url: cloudinaryUrl
-        };
+        try {
+          const cloudinaryUrl = await uploadImageToCloudinary(file);
+          console.log('Cloudinary upload response:', cloudinaryUrl);
+          return {
+            id: Date.now().toString() + Math.random(),
+            name: file.name,
+            size: file.size,
+            preview: cloudinaryUrl,
+            url: cloudinaryUrl
+          };
+        } catch (err) {
+          console.error('Error uploading file to Cloudinary:', err);
+          throw err;
+        }
       });
 
       const newImages = await Promise.all(uploadPromises);
-      setImages([...images, ...newImages]);
+      setImages(prevImages => [...prevImages, ...newImages]);
     } catch (error) {
-      console.error('Error uploading images:', error);
-      // You may want to add error handling UI here
+      console.error('Error in handleDrop:', error);
+      setUploadError('Failed to upload images. Please try again.');
+    } finally {
+      setIsUploading(false);
     }
   };
 
