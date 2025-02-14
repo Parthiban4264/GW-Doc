@@ -152,14 +152,12 @@ function ProjectList() {
                 <div className="bg-gray-50 px-6 py-4 border-b">
                   <h3 className="text-xl font-semibold text-gray-900">API Documentation</h3>
                 </div>
-                <div className="p-6 bg-white h-[400px]">
-                  <MarkdownEditor
-                    value={selectedProject.apiDocs || 'No API documentation available'}
-                    renderHTML={text => marked(text)}
-                    view={{ menu: false, md: true, html: true }}
-                    canView={{ menu: true, md: true, html: true, both: true }}
-                    readOnly={true}
-                  />
+                <div className="p-6 bg-white">
+                  <div className="prose max-w-none">
+                    <div dangerouslySetInnerHTML={{ 
+                      __html: marked(selectedProject.apiDocs || 'No API documentation available') 
+                    }} />
+                  </div>
                 </div>
               </div>
 
@@ -167,14 +165,12 @@ function ProjectList() {
                 <div className="bg-gray-50 px-6 py-4 border-b">
                   <h3 className="text-xl font-semibold text-gray-900">Application Flow</h3>
                 </div>
-                <div className="p-6 bg-white h-[400px]">
-                  <MarkdownEditor
-                    value={selectedProject.flowDoc || 'No flow documentation available'}
-                    renderHTML={text => marked(text)}
-                    view={{ menu: false, md: true, html: true }}
-                    canView={{ menu: true, md: true, html: true, both: true }}
-                    readOnly={true}
-                  />
+                <div className="p-6 bg-white">
+                  <div className="prose max-w-none">
+                    <div dangerouslySetInnerHTML={{ 
+                      __html: marked(selectedProject.flowDoc || 'No flow documentation available') 
+                    }} />
+                  </div>
                 </div>
               </div>
             </div>
