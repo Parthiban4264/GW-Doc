@@ -134,32 +134,36 @@ function ProjectList() {
       {/* Documentation Modal */}
       {showDocsModal && selectedProject && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">{selectedProject.name} Documentation</h2>
+          <div className="bg-white rounded-lg p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">{selectedProject.name} Documentation</h2>
               <button
                 onClick={() => setShowDocsModal(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 text-2xl font-semibold"
               >
                 ×
               </button>
             </div>
             
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-medium mb-2">API Documentation</h3>
+            <div className="space-y-8">
+              <div className="border rounded-lg overflow-hidden">
+                <div className="bg-gray-50 px-6 py-4 border-b">
+                  <h3 className="text-xl font-semibold text-gray-900">API Documentation</h3>
+                </div>
                 <div 
-                  className="prose max-w-none bg-gray-50 p-4 rounded-lg"
+                  className="prose prose-lg max-w-none p-6 bg-white"
                   dangerouslySetInnerHTML={{ 
                     __html: marked(selectedProject.apiDocs || 'No API documentation available') 
                   }}
                 />
               </div>
 
-              <div>
-                <h3 className="text-lg font-medium mb-2">Application Flow</h3>
+              <div className="border rounded-lg overflow-hidden">
+                <div className="bg-gray-50 px-6 py-4 border-b">
+                  <h3 className="text-xl font-semibold text-gray-900">Application Flow</h3>
+                </div>
                 <div 
-                  className="prose max-w-none bg-gray-50 p-4 rounded-lg"
+                  className="prose prose-lg max-w-none p-6 bg-white"
                   dangerouslySetInnerHTML={{ 
                     __html: marked(selectedProject.flowDoc || 'No flow documentation available') 
                   }}
