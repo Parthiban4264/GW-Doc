@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { uploadImageToCloudinary } from '../services/cloudinary';
 import { useNavigate, useParams } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -14,14 +15,25 @@ function ImageUpload() {
     setProject(currentProject);
   }, [projectId, projects]);
 
-  const handleDrop = (acceptedFiles) => {
-    const newImages = acceptedFiles.slice(0, 20).map(file => ({
-      id: Date.now().toString(),
-      name: file.name,
-      size: file.size,
-      preview: URL.createObjectURL(file)
-    }));
-    setImages([...images, ...newImages]);
+  const handleDrop = async (acceptedFiles) => {
+    try {
+      const uploadPromises = acceptedFiles.slice(0, 20).map(async (file) => {
+        const cloudinaryUrl = await uploadImageToCloudinary(file);
+        return {
+          id: Date.now().toString(),
+          name: file.name,
+          size: file.size,
+          preview: cloudinaryUrl,
+          url: cloudinaryUrl
+        };
+      });
+
+      const newImages = await Promise.all(uploadPromises);
+      setImages([...images, ...newImages]);
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      // You may want to add error handling UI here
+    }
   };
 
   const handleNext = () => {
