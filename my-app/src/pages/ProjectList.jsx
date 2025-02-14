@@ -155,7 +155,10 @@ function ProjectList() {
                 <div className="p-6 bg-white">
                   <div className="prose max-w-none">
                     <div dangerouslySetInnerHTML={{ 
-                      __html: marked(selectedProject.apiDocs || 'No API documentation available') 
+                      __html: marked(selectedProject.apiDocs || 'No API documentation available', {
+                        breaks: true,
+                        gfm: true
+                      }) 
                     }} />
                   </div>
                 </div>
@@ -168,7 +171,10 @@ function ProjectList() {
                 <div className="p-6 bg-white">
                   <div className="prose max-w-none">
                     <div dangerouslySetInnerHTML={{ 
-                      __html: marked(selectedProject.flowDoc || 'No flow documentation available') 
+                      __html: marked(selectedProject.flowDoc || 'No flow documentation available', {
+                        breaks: true,
+                        gfm: true
+                      }) 
                     }} />
                   </div>
                 </div>
