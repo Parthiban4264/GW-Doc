@@ -77,7 +77,7 @@ function RequirementsStep({ projectId, onNext, onBack }) {
               <div className="w-2/3">
                 {requirements[image.id] ? (
                   <div 
-                    className="prose max-w-none prose-p:my-6 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-4 prose-li:my-2 prose-li:leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:whitespace-pre-wrap"
+                    className="prose max-w-none prose-p:my-6 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-4 prose-li:my-2 prose-li:leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:whitespace-pre-wrap [&>p]:mb-6 [&_p]:mb-6 prose-p:after:content-[''] prose-p:after:block prose-p:after:h-6"
                     dangerouslySetInnerHTML={{ 
                       __html: marked(requirements[image.id]) 
                     }}
