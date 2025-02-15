@@ -169,11 +169,21 @@ function AppFlowStep({ projectId, onNext, onBack }) {
       )}
 
       {flowDocument && (
-        <div className="bg-white rounded-lg p-6">
-          <div
-            className="prose max-w-none prose-p:my-6 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-4 prose-li:my-2 prose-li:leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:whitespace-pre-wrap [&>p]:mb-6 [&_p]:mb-6 prose-p:after:content-[''] prose-p:after:block prose-p:after:h-6"
-            dangerouslySetInnerHTML={{ __html: marked(flowDocument) }}
-          />
+        <div className="border rounded-lg overflow-hidden">
+          <div className="bg-gray-50 px-6 py-4 border-b">
+            <h3 className="text-xl font-semibold text-gray-900">Application Flow</h3>
+          </div>
+          <div className="p-6 bg-white">
+            <div 
+              className="prose prose-sm max-w-none prose-p:mt-6 prose-p:mb-4 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-6 prose-ul:my-4 prose-li:my-2 prose-li:leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ 
+                __html: marked(flowDocument, {
+                  breaks: true,
+                  gfm: true
+                }) 
+              }}
+            />
+          </div>
         </div>
       )}
 
