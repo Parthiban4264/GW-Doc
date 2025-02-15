@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { marked } from 'marked';
-import { generateRequirementsFromDescription, generateAPIDocumentation } from '../../services/openai';
+import React, { useState, useEffect } from "react";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { marked } from "marked";
+import {
+  generateRequirementsFromDescription,
+  generateAPIDocumentation,
+} from "../../services/openai";
 
 const DraggableScreen = ({ id, index, image, description, moveScreen }) => {
   const [{ isDragging }, drag] = useDrag({
-    type: 'screen',
+    type: "screen",
     item: { id, index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -15,7 +18,7 @@ const DraggableScreen = ({ id, index, image, description, moveScreen }) => {
   });
 
   const [, drop] = useDrop({
-    accept: 'screen',
+    accept: "screen",
     hover: (item) => {
       if (item.index !== index) {
         moveScreen(item.index, index);
@@ -28,7 +31,7 @@ const DraggableScreen = ({ id, index, image, description, moveScreen }) => {
     <div
       ref={(node) => drag(drop(node))}
       className={`p-4 bg-white rounded-lg shadow ${
-        isDragging ? 'opacity-50' : ''
+        isDragging ? "opacity-50" : ""
       }`}
     >
       <img
@@ -43,22 +46,28 @@ const DraggableScreen = ({ id, index, image, description, moveScreen }) => {
 
 function AppFlowStep({ projectId, onNext, onBack }) {
   const [images] = useLocalStorage(`project-${projectId}-images`, []);
-  const [descriptions] = useLocalStorage(`project-${projectId}-descriptions`, {});
-  const [requirements] = useLocalStorage(`project-${projectId}-requirements`, {});
+  const [descriptions] = useLocalStorage(
+    `project-${projectId}-descriptions`,
+    {}
+  );
+  const [requirements] = useLocalStorage(
+    `project-${projectId}-requirements`,
+    {}
+  );
   const [screenOrder, setScreenOrder] = useLocalStorage(
     `project-${projectId}-screen-order`,
     images.map((img) => img.id)
   );
   const [flowDocument, setFlowDocument] = useLocalStorage(
     `project-${projectId}-flow-document`,
-    ''
+    ""
   );
   const [loading, setLoading] = useState(false);
 
   // Filter out any invalid image IDs and ensure we have valid images
   const orderedImages = screenOrder
-    .map(id => images.find(img => img.id === id))
-    .filter(image => image && image.preview);
+    .map((id) => images.find((img) => img.id === id))
+    .filter((image) => image && image.preview);
 
   const moveScreen = (fromIndex, toIndex) => {
     const newOrder = [...screenOrder];
@@ -71,51 +80,52 @@ function AppFlowStep({ projectId, onNext, onBack }) {
     setLoading(true);
     try {
       const orderedScreens = screenOrder
-        .map(id => ({
-          image: images.find(img => img.id === id),
+        .map((id) => ({
+          image: images.find((img) => img.id === id),
           description: descriptions[id],
-          requirements: requirements[id]
+          requirements: requirements[id],
         }))
-        .filter(screen => screen.image);
+        .filter((screen) => screen.image);
 
       // Create a detailed flow description based on the actual screen data
       const flowDescription = orderedScreens
         .map((screen, index) => {
           // Get the actual description and requirements for this screen
-          const screenDescription = descriptions[screen.image.id] || '';
-          const screenRequirements = requirements[screen.image.id] || '';
-          
+          const screenDescription = descriptions[screen.image.id] || "";
+          const screenRequirements = requirements[screen.image.id] || "";
+
           return [
             `# ${index + 1}. ${screen.image.name}`,
-            '',
-            '## Screen Description',
+            "",
+            "## Screen Description",
             screenDescription,
-            '',
-            '## Requirements',
+            "",
+            "## Requirements",
             screenRequirements,
-            '',
-            '## Flow Connections',
-            index === 0 
-              ? '- Entry point to the application' 
+            "",
+            "## Flow Connections",
+            index === 0
+              ? "- Entry point to the application"
               : `- Connected from: ${orderedScreens[index - 1].image.name}`,
-            index < orderedScreens.length - 1 
-              ? `- Leads to: ${orderedScreens[index + 1].image.name}` 
-              : '- Exit point of the flow',
-            '',
-            '---'
-          ].join('\n');
-        }).join('\n');
+            index < orderedScreens.length - 1
+              ? `- Leads to: ${orderedScreens[index + 1].image.name}`
+              : "- Exit point of the flow",
+            "",
+            "---",
+          ].join("\n");
+        })
+        .join("\n");
 
       const prompt = `Based on the following UI screens and their descriptions, generate a comprehensive application flow document that describes the user journey through the application. Focus on the interactions between screens, data flow, and user actions.\n\nScreen Details:\n\n${flowDescription}`;
-      
+
       const response = await generateRequirementsFromDescription(
-        'Application Flow',
+        "Application Flow",
         prompt
       );
 
       setFlowDocument(response);
     } catch (error) {
-      console.error('Failed to generate app flow:', error);
+      console.error("Failed to generate app flow:", error);
     } finally {
       setLoading(false);
     }
@@ -126,7 +136,8 @@ function AppFlowStep({ projectId, onNext, onBack }) {
       <div>
         <h2 className="text-lg font-medium text-gray-900">Create App Flow</h2>
         <p className="mt-1 text-sm text-gray-500">
-          Arrange screens in order and generate the application flow documentation
+          Arrange screens in order and generate the application flow
+          documentation
         </p>
       </div>
 
@@ -152,16 +163,16 @@ function AppFlowStep({ projectId, onNext, onBack }) {
             disabled={loading}
             className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50"
           >
-            {loading ? 'Generating...' : 'Generate App Flow Document'}
+            {loading ? "Generating..." : "Generate App Flow Document"}
           </button>
         </div>
       )}
 
       {flowDocument && (
         <div className="bg-white rounded-lg p-6">
-          <div 
+          <div
             className="prose max-w-none prose-p:my-6 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-4 prose-li:my-2 prose-li:leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:whitespace-pre-wrap"
-            dangerouslySetInnerHTML={{ __html: marked(flowDocument) }} 
+            dangerouslySetInnerHTML={{ __html: marked(flowDocument) }}
           />
         </div>
       )}
@@ -176,13 +187,15 @@ function AppFlowStep({ projectId, onNext, onBack }) {
         <button
           onClick={() => {
             // Update current step in project
-            const projects = JSON.parse(localStorage.getItem('projects') || '[]');
-            const updatedProjects = projects.map(p => 
-              p.id === projectId ? { ...p, currentStep: 'api' } : p
+            const projects = JSON.parse(
+              localStorage.getItem("projects") || "[]"
             );
-            localStorage.setItem('projects', JSON.stringify(updatedProjects));
-            
-            onNext && onNext('api');
+            const updatedProjects = projects.map((p) =>
+              p.id === projectId ? { ...p, currentStep: "api" } : p
+            );
+            localStorage.setItem("projects", JSON.stringify(updatedProjects));
+
+            onNext && onNext("api");
           }}
           disabled={!flowDocument}
           className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50"
