@@ -97,7 +97,7 @@ function AppFlowStep({ projectId, onNext, onBack }) {
             : '- Exit point of the flow',
           '',
           '---'
-        ].join('\n'));
+        ].join('\n')).join('\n');
 
       const prompt = `Generate a comprehensive application flow document that describes the user journey and interactions between screens. Include details about navigation paths, data flow, and user interactions for each screen.\n\nScreen Details:\n\n${flowDescription}`;
       
