@@ -1840,3 +1840,43 @@
 
 # 2025-02-15 08:06:49.092719
 +in the `ProjectList`page modal, inside the completed project data there is lot of unwanted characters and content is not properly formated can you check and fix that 
+
+# 2025-02-15 14:14:45.624350
++/add my-app/src/components/steps/APIDocsStep.jsx 
+
+# 2025-02-15 14:17:07.969749
++in Api docs step page when i click the export as PDF button it does not shows the status like is exporting or not because exporting can take sometime while user can know the status 
+
+# 2025-02-15 14:21:13.634950
++/add my-app/src/pages/ProjectList.jsx
+
+# 2025-02-15 14:22:24.537887
++can you add the export features on the projectlist page modal because user can export their project anytime
+
+# 2025-02-15 14:24:02.704614
++ProjectList.jsx:158 Uncaught ReferenceError: handleExport is not defined
++    at onClick (ProjectList.jsx:158:38)
++onClick	@	ProjectList.jsx:158 when i click export buttons then show this errors
+
+# 2025-02-15 14:27:58.361903
++theri sone minor mistake is there inside the `ProjectList` page modal html marked content inside the code block there is lot of "\" is there can you check and fix that
+
+# 2025-02-15 14:28:28.170569
++/undo
+
+# 2025-02-15 14:30:01.255285
++inside the project list modal api documentation, there is an unwanted baclslash inside the code blocks can you check and fix that
+
+# 2025-02-15 14:30:43.264250
++/undo
+
+# 2025-02-15 14:32:26.052880
++in the `ProjectList`page modal api documentation there is unwanted backslash is coming only inside the code blocks. example is {
++  \"projectName\": \"string\"
++} 
+
+# 2025-02-15 14:33:15.805752
++/undo
+
+# 2025-02-15 14:33:32.492957
++/drop my-app/src/components/steps/APIDocsStep.jsx
