@@ -78,28 +78,35 @@ function AppFlowStep({ projectId, onNext, onBack }) {
         }))
         .filter(screen => screen.image);
 
+      // Create a detailed flow description based on the actual screen data
       const flowDescription = orderedScreens
-        .map((screen, index) => [
-          `# ${index + 1}. ${screen.image.name}`,
-          '',
-          '## Screen Description',
-          screen.description,
-          '',
-          '## Requirements',
-          screen.requirements,
-          '',
-          '## Flow Connections',
-          index === 0 
-            ? '- Entry point to the application' 
-            : `- Connected from: ${orderedScreens[index - 1].image.name}`,
-          index < orderedScreens.length - 1 
-            ? `- Leads to: ${orderedScreens[index + 1].image.name}` 
-            : '- Exit point of the flow',
-          '',
-          '---'
-        ].join('\n')).join('\n');
+        .map((screen, index) => {
+          // Get the actual description and requirements for this screen
+          const screenDescription = descriptions[screen.image.id] || '';
+          const screenRequirements = requirements[screen.image.id] || '';
+          
+          return [
+            `# ${index + 1}. ${screen.image.name}`,
+            '',
+            '## Screen Description',
+            screenDescription,
+            '',
+            '## Requirements',
+            screenRequirements,
+            '',
+            '## Flow Connections',
+            index === 0 
+              ? '- Entry point to the application' 
+              : `- Connected from: ${orderedScreens[index - 1].image.name}`,
+            index < orderedScreens.length - 1 
+              ? `- Leads to: ${orderedScreens[index + 1].image.name}` 
+              : '- Exit point of the flow',
+            '',
+            '---'
+          ].join('\n');
+        }).join('\n');
 
-      const prompt = `Generate a comprehensive application flow document that describes the user journey and interactions between screens. Include details about navigation paths, data flow, and user interactions for each screen.\n\nScreen Details:\n\n${flowDescription}`;
+      const prompt = `Based on the following UI screens and their descriptions, generate a comprehensive application flow document that describes the user journey through the application. Focus on the interactions between screens, data flow, and user actions.\n\nScreen Details:\n\n${flowDescription}`;
       
       const response = await generateRequirementsFromDescription(
         'Application Flow',
