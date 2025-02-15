@@ -175,7 +175,15 @@ function AppFlowStep({ projectId, onNext, onBack }) {
           </div>
           <div className="p-6 bg-white">
             <div 
-              className="prose prose-sm max-w-none prose-p:mt-6 prose-p:mb-4 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-6 prose-ul:my-4 prose-li:my-2 prose-li:leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:whitespace-pre-wrap"
+              className="prose prose-sm max-w-none 
+                prose-h1:text-2xl prose-h1:font-bold prose-h1:mb-6 prose-h1:mt-0
+                prose-h2:text-xl prose-h2:font-semibold prose-h2:mb-4 prose-h2:mt-8
+                prose-h3:text-lg prose-h3:font-medium prose-h3:mb-3 prose-h3:mt-6
+                prose-p:text-base prose-p:leading-relaxed prose-p:my-4
+                prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc
+                prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal
+                prose-li:my-2 prose-li:pl-2
+                [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
               dangerouslySetInnerHTML={{ 
                 __html: marked(flowDocument, {
                   breaks: true,
