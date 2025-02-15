@@ -1,19 +1,9 @@
 const uploadImageToCloudinary = async (file) => {
   try {
-    // Convert file to base64
-    const base64Data = await new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(file);
-    });
-
-    // Create form data
     const formData = new FormData();
-    formData.append("file", base64Data);
-    formData.append("upload_preset", "gw_doc"); // Changed to your custom upload preset
-    formData.append("cloud_name", "drj0wvueq");
+    formData.append("file", file);
+    formData.append("upload_preset", "gw_doc");
 
-    // Upload to Cloudinary using fetch
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/drj0wvueq/image/upload`,
       {
@@ -23,7 +13,8 @@ const uploadImageToCloudinary = async (file) => {
     );
 
     if (!response.ok) {
-      throw new Error(`Upload failed: ${response.statusText}`);
+      const errorData = await response.json();
+      throw new Error(`Upload failed: ${errorData.error?.message || response.statusText}`);
     }
 
     const data = await response.json();
