@@ -16,6 +16,7 @@ function APIDocsStep({ projectId, onNext, onBack }) {
   const [apiSpecs, setApiSpecs] = useLocalStorage(`project-${projectId}-api-specs`, {});
 
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const navigate = useNavigate();
 
   const generateDocs = async () => {
@@ -57,6 +58,7 @@ ${nextScreen ? `- Next screen: ${nextScreen.name}` : '- Exit point'}
 
   const handleExport = async (format) => {
     if (format === 'pdf') {
+      setIsExporting(true);
       const content = marked(markdown);
       const file = { content, name: 'api-documentation.pdf' };
       
@@ -73,6 +75,9 @@ ${nextScreen ? `- Next screen: ${nextScreen.name}` : '- Exit point'}
         saveAs(blob, 'api-documentation.pdf');
       } catch (error) {
         console.error('Error generating PDF:', error);
+        alert('Failed to export PDF. Please try again.');
+      } finally {
+        setIsExporting(false);
       }
     } else {
       const filename = `api-documentation.${format}`;
@@ -134,9 +139,10 @@ ${nextScreen ? `- Next screen: ${nextScreen.name}` : '- Exit point'}
           </button>
           <button
             onClick={() => handleExport('pdf')}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+            disabled={isExporting}
+            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Export as PDF
+            {isExporting ? 'Exporting PDF...' : 'Export as PDF'}
           </button>
           <button
             onClick={() => {
