@@ -2,7 +2,7 @@ const uploadImageToCloudinary = async (file) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "gw_doc");
+    formData.append("upload_preset", "ml_default");
 
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/drj0wvueq/image/upload`,
