@@ -12,6 +12,37 @@ function ProjectList() {
   const [showDocsModal, setShowDocsModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isExporting, setIsExporting] = useState(false);
+
+  const handleExport = async (format, content) => {
+    if (format === 'pdf') {
+      setIsExporting(true);
+      try {
+        const htmlContent = marked(content?.replace(/\\n/g, '\n') || '');
+        const response = await fetch('http://localhost:3000/api/export/pdf', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ html: htmlContent }),
+        });
+        
+        const blob = await response.blob();
+        saveAs(blob, `documentation.pdf`);
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Failed to export PDF. Please try again.');
+      } finally {
+        setIsExporting(false);
+      }
+    } else {
+      const filename = `documentation.${format}`;
+      const exportContent = format === 'md' 
+        ? content?.replace(/\\n/g, '\n') || ''
+        : marked(content?.replace(/\\n/g, '\n') || '');
+      const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
+      saveAs(blob, filename);
+    }
+  };
   const navigate = useNavigate();
   const [projects] = useLocalStorage('projects', []);
 
@@ -234,39 +265,6 @@ function ProjectList() {
         </div>
       )}
 
-      {/* Export handling function */}
-      {(() => {
-        const handleExport = async (format, content) => {
-          if (format === 'pdf') {
-            setIsExporting(true);
-            try {
-              const htmlContent = marked(content?.replace(/\\n/g, '\n') || '');
-              const response = await fetch('http://localhost:3000/api/export/pdf', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ html: htmlContent }),
-              });
-              
-              const blob = await response.blob();
-              saveAs(blob, `documentation.pdf`);
-            } catch (error) {
-              console.error('Error generating PDF:', error);
-              alert('Failed to export PDF. Please try again.');
-            } finally {
-              setIsExporting(false);
-            }
-          } else {
-            const filename = `documentation.${format}`;
-            const exportContent = format === 'md' 
-              ? content?.replace(/\\n/g, '\n') || ''
-              : marked(content?.replace(/\\n/g, '\n') || '');
-            const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
-            saveAs(blob, filename);
-          }
-        };
-      })()}
     </div>
   );
 }
