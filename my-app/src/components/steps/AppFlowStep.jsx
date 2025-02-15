@@ -158,8 +158,11 @@ function AppFlowStep({ projectId, onNext, onBack }) {
       )}
 
       {flowDocument && (
-        <div className="prose max-w-none bg-white rounded-lg p-6">
-          <div dangerouslySetInnerHTML={{ __html: marked(flowDocument) }} />
+        <div className="bg-white rounded-lg p-6">
+          <div 
+            className="prose max-w-none prose-p:my-6 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-4 prose-li:my-2 prose-li:leading-relaxed [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&>p]:whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: marked(flowDocument) }} 
+          />
         </div>
       )}
 
