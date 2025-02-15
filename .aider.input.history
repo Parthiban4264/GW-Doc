@@ -1758,3 +1758,85 @@
 +    at generateRequirementsFromDescription (openai.js:7:37)
 +    at generateAppFlow (AppFlowStep.jsx:100:30)
 +
+
+# 2025-02-14 22:53:22.627542
++/undo
+
+# 2025-02-14 22:54:13.466440
++can you add export as a pdf on the api docs page i meant last step
+
+# 2025-02-14 22:54:58.310377
++y
+
+# 2025-02-14 22:55:06.920703
++/run cd my-app && npm install html-pdf-node
+
+# 2025-02-14 22:55:06.921121
++/run cd my-app && npm install html-pdf-node
+
+# 2025-02-14 22:56:23.313689
++y
+
+# 2025-02-14 22:56:29.776594
++/run cd backend && npm install html-pdf-node
+
+# 2025-02-14 22:56:29.776710
++/run cd backend && npm install html-pdf-node
+
+# 2025-02-14 22:57:40.849810
++y
+
+# 2025-02-14 22:59:36.571543
++in the `ProjectList` page and inside a modal the content is rendered inside the string. i think thats why markdown not working as expected can you check that 
+
+# 2025-02-14 22:59:54.067678
++n
+
+# 2025-02-14 23:00:16.314325
++/drop backend
+
+# 2025-02-14 23:01:45.204947
++/drop my-app/src/App.css my-app/src/App.jsx my-app/src/assets/react.svg my-app/src/config/cloudinary.js
+
+# 2025-02-14 23:02:15.162755
++/drop
+
+# 2025-02-14 23:03:34.948231
++/add my-app/src/pages my-app/src/components
+
+# 2025-02-14 23:03:45.258508
++in the `ProjectList` page and inside a modal the content is rendered inside the string. i think thats why markdown not working as expected can you check that 
+
+# 2025-02-14 23:04:20.708470
++n
+
+# 2025-02-15 07:22:02.626038
++/add my-app/src/components my-app/src/pages
+
+# 2025-02-15 07:22:21.989620
++in the `ProjectList` page and inside a modal the content is rendered inside the string. i think thats why markdown not working as expected can you check that 
+
+# 2025-02-15 07:25:04.434655
++but there is lot of markdown `characters` like /n, #, etc can you check and fix that
+
+# 2025-02-15 07:27:18.124319
++hook.js:608 Error uploading to Cloudinary: Error: Upload failed: Bad Request
++    at uploadImageToCloudinary (cloudinary.js:26:13)
++    at async ImageUploadStep.jsx:23:35
++    at async Promise.all (index 0)
++    at async onDrop (ImageUploadStep.jsx:38:27)
+
+# 2025-02-15 07:27:37.418604
++y
+
+# 2025-02-15 07:31:10.395933
++{error: {message: "Upload preset not found"}
+
+# 2025-02-15 07:54:30.894946
++i think in application flow step same content is repeating each project can you verify that
+
+# 2025-02-15 08:00:55.465023
++in create app flow step there is constant data has been generated every time can you check and fix that bug. because i need to create an app flow based on the uploaded image date not static data 
+
+# 2025-02-15 08:06:49.092719
++in the `ProjectList`page modal, inside the completed project data there is lot of unwanted characters and content is not properly formated can you check and fix that 
