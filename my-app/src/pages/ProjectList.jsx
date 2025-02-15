@@ -154,16 +154,12 @@ function ProjectList() {
                 </div>
                 <div className="p-6 bg-white">
                   <div className="prose max-w-none">
-                    <div className="markdown-content">
-                      <MarkdownEditor
-                        value={selectedProject.apiDocs || 'No API documentation available'}
-                        renderHTML={text => marked(text)}
-                        view={{ menu: false, md: false, html: true }}
-                        canView={{ menu: false, md: false, html: true }}
-                        readOnly={true}
-                        style={{ border: 'none' }}
-                      />
-                    </div>
+                    <div 
+                      className="markdown-content prose max-w-none" 
+                      dangerouslySetInnerHTML={{ 
+                        __html: marked(selectedProject.apiDocs || 'No API documentation available') 
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -174,16 +170,12 @@ function ProjectList() {
                 </div>
                 <div className="p-6 bg-white">
                   <div className="prose max-w-none">
-                    <div className="markdown-content">
-                      <MarkdownEditor
-                        value={selectedProject.flowDoc || 'No flow documentation available'}
-                        renderHTML={text => marked(text)}
-                        view={{ menu: false, md: false, html: true }}
-                        canView={{ menu: false, md: false, html: true }}
-                        readOnly={true}
-                        style={{ border: 'none' }}
-                      />
-                    </div>
+                    <div 
+                      className="markdown-content prose max-w-none" 
+                      dangerouslySetInnerHTML={{ 
+                        __html: marked(selectedProject.flowDoc || 'No flow documentation available') 
+                      }}
+                    />
                   </div>
                 </div>
               </div>
