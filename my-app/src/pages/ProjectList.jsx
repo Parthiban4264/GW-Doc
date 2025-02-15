@@ -153,11 +153,14 @@ function ProjectList() {
                   <h3 className="text-xl font-semibold text-gray-900">API Documentation</h3>
                 </div>
                 <div className="p-6 bg-white">
-                  <div className="prose max-w-none">
+                  <div className="prose prose-sm max-w-none">
                     <div 
-                      className="markdown-content prose max-w-none" 
+                      className="markdown-content" 
                       dangerouslySetInnerHTML={{ 
-                        __html: marked(selectedProject.apiDocs || 'No API documentation available') 
+                        __html: marked(selectedProject.apiDocs?.replace(/\\n/g, '\n') || 'No API documentation available', {
+                          breaks: true,
+                          gfm: true
+                        }) 
                       }}
                     />
                   </div>
@@ -169,11 +172,14 @@ function ProjectList() {
                   <h3 className="text-xl font-semibold text-gray-900">Application Flow</h3>
                 </div>
                 <div className="p-6 bg-white">
-                  <div className="prose max-w-none">
+                  <div className="prose prose-sm max-w-none">
                     <div 
-                      className="markdown-content prose max-w-none" 
+                      className="markdown-content" 
                       dangerouslySetInnerHTML={{ 
-                        __html: marked(selectedProject.flowDoc || 'No flow documentation available') 
+                        __html: marked(selectedProject.flowDoc?.replace(/\\n/g, '\n') || 'No flow documentation available', {
+                          breaks: true,
+                          gfm: true
+                        }) 
                       }}
                     />
                   </div>
