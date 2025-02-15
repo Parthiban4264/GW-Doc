@@ -5,11 +5,13 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { marked } from 'marked';
 import MarkdownEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
+import { saveAs } from 'file-saver';
 
 function ProjectList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDocsModal, setShowDocsModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isExporting, setIsExporting] = useState(false);
   const navigate = useNavigate();
   const [projects] = useLocalStorage('projects', []);
 
@@ -149,8 +151,29 @@ function ProjectList() {
             
             <div className="space-y-8">
               <div className="border rounded-lg overflow-hidden">
-                <div className="bg-gray-50 px-6 py-4 border-b">
+                <div className="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
                   <h3 className="text-xl font-semibold text-gray-900">API Documentation</h3>
+                  <div className="space-x-2">
+                    <button
+                      onClick={() => handleExport('md', selectedProject.apiDocs)}
+                      className="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    >
+                      Export MD
+                    </button>
+                    <button
+                      onClick={() => handleExport('html', selectedProject.apiDocs)}
+                      className="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    >
+                      Export HTML
+                    </button>
+                    <button
+                      onClick={() => handleExport('pdf', selectedProject.apiDocs)}
+                      disabled={isExporting}
+                      className="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isExporting ? 'Exporting PDF...' : 'Export PDF'}
+                    </button>
+                  </div>
                 </div>
                 <div className="p-6 bg-white">
                   <div className="prose prose-sm max-w-none">
@@ -168,8 +191,29 @@ function ProjectList() {
               </div>
 
               <div className="border rounded-lg overflow-hidden">
-                <div className="bg-gray-50 px-6 py-4 border-b">
+                <div className="bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
                   <h3 className="text-xl font-semibold text-gray-900">Application Flow</h3>
+                  <div className="space-x-2">
+                    <button
+                      onClick={() => handleExport('md', selectedProject.flowDoc)}
+                      className="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    >
+                      Export MD
+                    </button>
+                    <button
+                      onClick={() => handleExport('html', selectedProject.flowDoc)}
+                      className="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                    >
+                      Export HTML
+                    </button>
+                    <button
+                      onClick={() => handleExport('pdf', selectedProject.flowDoc)}
+                      disabled={isExporting}
+                      className="px-3 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isExporting ? 'Exporting PDF...' : 'Export PDF'}
+                    </button>
+                  </div>
                 </div>
                 <div className="p-6 bg-white">
                   <div className="prose prose-sm max-w-none">
@@ -189,6 +233,40 @@ function ProjectList() {
           </div>
         </div>
       )}
+
+      {/* Export handling function */}
+      {(() => {
+        const handleExport = async (format, content) => {
+          if (format === 'pdf') {
+            setIsExporting(true);
+            try {
+              const htmlContent = marked(content?.replace(/\\n/g, '\n') || '');
+              const response = await fetch('http://localhost:3000/api/export/pdf', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ html: htmlContent }),
+              });
+              
+              const blob = await response.blob();
+              saveAs(blob, `documentation.pdf`);
+            } catch (error) {
+              console.error('Error generating PDF:', error);
+              alert('Failed to export PDF. Please try again.');
+            } finally {
+              setIsExporting(false);
+            }
+          } else {
+            const filename = `documentation.${format}`;
+            const exportContent = format === 'md' 
+              ? content?.replace(/\\n/g, '\n') || ''
+              : marked(content?.replace(/\\n/g, '\n') || '');
+            const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8' });
+            saveAs(blob, filename);
+          }
+        };
+      })()}
     </div>
   );
 }
