@@ -175,21 +175,23 @@ function AppFlowStep({ projectId, onNext, onBack }) {
           </div>
           <div className="p-6 bg-white">
             <div 
-              className="prose max-w-none
+              className="markdown-content prose max-w-none
                 prose-headings:font-semibold
-                prose-h1:text-2xl prose-h1:font-bold prose-h1:mb-4 prose-h1:mt-6 prose-h1:text-gray-900
-                prose-h2:text-xl prose-h2:mb-3 prose-h2:mt-6 prose-h2:text-gray-900
-                prose-h3:text-lg prose-h3:mb-2 prose-h3:mt-4 prose-h3:text-gray-900
-                prose-p:text-base prose-p:leading-7 prose-p:my-4 prose-p:text-gray-600
-                prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc 
-                prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal
-                prose-li:my-1.5 prose-li:pl-2 prose-li:text-gray-600
+                prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-6 prose-h1:mt-8 prose-h1:text-gray-900
+                prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-8 prose-h2:text-gray-900
+                prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-6 prose-h3:text-gray-900
+                prose-p:text-base prose-p:leading-7 prose-p:my-6 prose-p:text-gray-600
+                prose-ul:mt-4 prose-ul:mb-6 prose-ul:pl-8 prose-ul:list-disc 
+                prose-ol:mt-4 prose-ol:mb-6 prose-ol:pl-8 prose-ol:list-decimal
+                prose-li:mb-3 prose-li:pl-2 prose-li:text-gray-600
                 [&>*:first-child]:mt-0
                 [&>*:last-child]:mb-0
-                [&>h2+ul]:mt-3
-                [&>h2+ol]:mt-3
-                [&>h3+ul]:mt-2
-                [&>h3+ol]:mt-2
+                [&>h2+p]:mt-4
+                [&>h3+p]:mt-4
+                [&>p+ul]:mt-4
+                [&>p+ol]:mt-4
+                [&>ul+p]:mt-6
+                [&>ol+p]:mt-6
                 [&>ul>li]:marker:text-gray-400
                 [&>ol>li]:marker:text-gray-400"
               dangerouslySetInnerHTML={{ 
