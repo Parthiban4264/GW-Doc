@@ -83,14 +83,17 @@ function RequirementsStep({ projectId, onNext, onBack }) {
                     <div className="p-4 bg-white">
                       <div 
                         className="prose max-w-none
-                          prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-0 prose-h1:text-gray-900
-                          prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-6 prose-h2:mt-12 prose-h2:text-gray-900
-                          prose-h3:text-xl prose-h3:font-medium prose-h3:mb-4 prose-h3:mt-8 prose-h3:text-gray-900
-                          prose-p:text-base prose-p:leading-7 prose-p:mb-6 prose-p:text-gray-600
-                          prose-ul:my-6 prose-ul:pl-8 prose-ul:list-disc prose-ul:text-gray-600
-                          prose-ol:my-6 prose-ol:pl-8 prose-ol:list-decimal prose-ol:text-gray-600
-                          prose-li:my-2 prose-li:pl-2
-                          [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+                          prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-6 prose-h1:mt-8 prose-h1:text-gray-900
+                          prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-4 prose-h2:mt-8 prose-h2:text-gray-900
+                          prose-h3:text-xl prose-h3:font-medium prose-h3:mb-3 prose-h3:mt-6 prose-h3:text-gray-900
+                          prose-p:text-base prose-p:leading-7 prose-p:mb-4 prose-p:text-gray-600
+                          prose-ul:mt-0 prose-ul:mb-4 prose-ul:pl-8 prose-ul:list-disc prose-ul:text-gray-600
+                          prose-ol:mt-0 prose-ol:mb-4 prose-ol:pl-8 prose-ol:list-decimal prose-ol:text-gray-600
+                          prose-li:mb-1 prose-li:pl-2
+                          [&>*:first-child]:mt-0
+                          [&>*:last-child]:mb-0
+                          [&>h2+ul]:mt-2 [&>h2+ol]:mt-2
+                          [&>h3+ul]:mt-2 [&>h3+ol]:mt-2"
                         dangerouslySetInnerHTML={{ 
                           __html: marked(requirements[image.id], {
                             breaks: true,
