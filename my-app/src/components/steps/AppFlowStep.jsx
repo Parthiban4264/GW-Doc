@@ -79,21 +79,25 @@ function AppFlowStep({ projectId, onNext, onBack }) {
         .filter(screen => screen.image);
 
       const flowDescription = orderedScreens
-        .map((screen, index) => `
-# ${index + 1}. ${screen.image.name}
-
-## Screen Description
-${screen.description}
-
-## Requirements
-${screen.requirements}
-
-## Flow Connections
-${index === 0 ? '- Entry point to the application' : `- Connected from: ${orderedScreens[index - 1].image.name}`}
-${index < orderedScreens.length - 1 ? `- Leads to: ${orderedScreens[index + 1].image.name}` : '- Exit point of the flow'}
-
----
-`).join('\n');
+        .map((screen, index) => [
+          `# ${index + 1}. ${screen.image.name}`,
+          '',
+          '## Screen Description',
+          screen.description,
+          '',
+          '## Requirements',
+          screen.requirements,
+          '',
+          '## Flow Connections',
+          index === 0 
+            ? '- Entry point to the application' 
+            : `- Connected from: ${orderedScreens[index - 1].image.name}`,
+          index < orderedScreens.length - 1 
+            ? `- Leads to: ${orderedScreens[index + 1].image.name}` 
+            : '- Exit point of the flow',
+          '',
+          '---'
+        ].join('\n'));
 
       const prompt = `Generate a comprehensive application flow document that describes the user journey and interactions between screens. Include details about navigation paths, data flow, and user interactions for each screen.\n\nScreen Details:\n\n${flowDescription}`;
       
