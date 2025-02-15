@@ -1,36 +1,39 @@
-import React, { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import { uploadImageToCloudinary } from '../../services/cloudinary';
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { uploadImageToCloudinary } from "../../services/cloudinary";
 
 function ImageUploadStep({ projectId, onNext, isFirstStep }) {
-  const [images, setImages] = useLocalStorage(`project-${projectId}-images`, []);
+  const [images, setImages] = useLocalStorage(
+    `project-${projectId}-images`,
+    []
+  );
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
-      'image/*': ['.png', '.jpg', '.jpeg', '.gif']
+      "image/*": [".png", ".jpg", ".jpeg", ".gif"],
     },
     maxFiles: 20,
     onDrop: async (acceptedFiles) => {
       setIsUploading(true);
       setUploadError(null);
-      
+
       try {
         const uploadPromises = acceptedFiles.map(async (file) => {
           try {
             const cloudinaryUrl = await uploadImageToCloudinary(file);
-            console.log('Cloudinary upload response:', cloudinaryUrl);
+            console.log("Cloudinary upload response:", cloudinaryUrl);
             return {
               id: Date.now().toString() + Math.random(),
               name: file.name,
               size: file.size,
               preview: cloudinaryUrl,
-              url: cloudinaryUrl
+              url: cloudinaryUrl,
             };
           } catch (err) {
-            console.error('Error uploading file to Cloudinary:', err);
+            console.error("Error uploading file to Cloudinary:", err);
             throw err;
           }
         });
@@ -38,12 +41,12 @@ function ImageUploadStep({ projectId, onNext, isFirstStep }) {
         const newImages = await Promise.all(uploadPromises);
         setImages([...images, ...newImages]);
       } catch (error) {
-        console.error('Error in onDrop:', error);
-        setUploadError('Failed to upload images. Please try again.');
+        console.error("Error in onDrop:", error);
+        setUploadError("Failed to upload images. Please try again.");
       } finally {
         setIsUploading(false);
       }
-    }
+    },
   });
 
   return (
@@ -55,9 +58,12 @@ function ImageUploadStep({ projectId, onNext, isFirstStep }) {
         </p>
       </div>
 
-      <div {...getRootProps()} className={`border-2 border-dashed rounded-lg p-12 text-center ${
-        isDragActive ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300'
-      }`}>
+      <div
+        {...getRootProps()}
+        className={`border-2 border-dashed rounded-lg p-12 text-center ${
+          isDragActive ? "border-indigo-500 bg-indigo-50" : "border-gray-300"
+        }`}
+      >
         <input {...getInputProps()} disabled={isUploading} />
         <div className="space-y-2">
           {isUploading ? (
@@ -74,7 +80,9 @@ function ImageUploadStep({ projectId, onNext, isFirstStep }) {
                   <p>Drag & drop files here, or click to select files</p>
                 )}
               </div>
-              <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB each</p>
+              <p className="text-xs text-gray-500">
+                PNG, JPG, GIF up to 10MB each
+              </p>
             </>
           )}
         </div>
@@ -95,8 +103,10 @@ function ImageUploadStep({ projectId, onNext, isFirstStep }) {
               className="h-40 w-full object-cover rounded-lg"
             />
             <button
-              onClick={() => setImages(images.filter(img => img.id !== image.id))}
-              className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={() =>
+                setImages(images.filter((img) => img.id !== image.id))
+              }
+              className="grid place-items-center absolute top-2 right-0 px-1.5 py-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity leading-none"
             >
               ×
             </button>
@@ -107,7 +117,7 @@ function ImageUploadStep({ projectId, onNext, isFirstStep }) {
 
       <div className="flex justify-end space-x-4">
         <button
-          onClick={() => onNext('describe')}
+          onClick={() => onNext("describe")}
           disabled={images.length === 0}
           className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50"
         >

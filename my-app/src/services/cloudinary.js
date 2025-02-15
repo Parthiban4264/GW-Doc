@@ -2,7 +2,10 @@ const uploadImageToCloudinary = async (file) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "ml_default");
+    formData.append(
+      "upload_preset",
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+    );
 
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/drj0wvueq/image/upload`,
