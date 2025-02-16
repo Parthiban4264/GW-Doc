@@ -22,16 +22,12 @@ const SigninForm = () => {
     e.preventDefault();
     setError('');
 
-    // In a real app, you'd make an API call here
-    // For now, we'll just simulate authentication
-    const userData = {
-      email: formData.email,
-      id: Date.now(),
-      username: formData.email.split('@')[0]
-    };
-
-    login(userData);
-    navigate('/');
+    const success = login(formData);
+    if (success) {
+      navigate('/');
+    } else {
+      setError(useAuthStore.getState().error);
+    }
   };
 
   return (

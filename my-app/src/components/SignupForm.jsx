@@ -24,21 +24,40 @@ const SignupForm = () => {
     e.preventDefault();
     setError('');
 
+    // Validate password requirements
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return;
+    }
+
+    if (!/[A-Z]/.test(formData.password)) {
+      setError('Password must contain at least one uppercase letter');
+      return;
+    }
+
+    if (!/[0-9]/.test(formData.password)) {
+      setError('Password must contain at least one number');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
-    // In a real app, you'd make an API call here
-    // For now, we'll just use the local storage
-    const userData = {
-      username: formData.username,
-      email: formData.email,
-      id: Date.now() // Simulate a user ID
-    };
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
 
-    signup(userData);
-    navigate('/');
+    const success = signup(formData);
+    if (success) {
+      navigate('/');
+    } else {
+      setError(useAuthStore.getState().error);
+    }
   };
 
   return (
