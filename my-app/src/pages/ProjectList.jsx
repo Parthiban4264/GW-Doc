@@ -50,16 +50,24 @@ function ProjectList() {
   const navigate = useNavigate();
   const [projects] = useLocalStorage("projects", []);
 
+  const user = useAuthStore(state => state.user);
+  
   const handleCreateSuccess = (project) => {
     setIsModalOpen(false);
     // Get existing projects
     const existingProjects = JSON.parse(
       localStorage.getItem("projects") || "[]"
     );
-    // Add new project
+    // Add new project with current user
     const updatedProjects = [
       ...existingProjects,
-      { ...project, isComplete: false, currentStep: "upload" },
+      { 
+        ...project, 
+        isComplete: false, 
+        currentStep: "upload",
+        created_by: user.username,
+        team_members: [user.username]
+      },
     ];
     // Save back to localStorage
     localStorage.setItem("projects", JSON.stringify(updatedProjects));
