@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import ProjectList from './pages/ProjectList';
 import ProjectWorkflow from './pages/ProjectWorkflow';
 import SignupForm from './components/SignupForm';
+import SigninForm from './components/SigninForm';
 import useAuthStore from './stores/authStore';
 
 function App() {
@@ -16,13 +17,14 @@ function App() {
           <Routes>
             <Route 
               path="/" 
-              element={isAuthenticated ? <ProjectList /> : <Navigate to="/signup" />} 
+              element={isAuthenticated ? <ProjectList /> : <Navigate to="/signin" />} 
             />
             <Route 
               path="/project/:projectId/*" 
-              element={isAuthenticated ? <ProjectWorkflow /> : <Navigate to="/signup" />} 
+              element={isAuthenticated ? <ProjectWorkflow /> : <Navigate to="/signin" />} 
             />
             <Route path="/signup" element={<SignupForm />} />
+            <Route path="/signin" element={<SigninForm />} />
           </Routes>
         </div>
       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateProjectModal from "../components/CreateProjectModal";
 import useLocalStorage from "../hooks/useLocalStorage";
+import useAuthStore from "../stores/authStore";
 import { marked } from "marked";
 import MarkdownEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
@@ -104,14 +105,23 @@ function ProjectList() {
 
   return (
     <div className="space-y-6">
-      <div className="sm:flex sm:items-center">
+      <div className="sm:flex sm:items-center justify-between">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-semibold text-gray-900">Projects</h1>
           <p className="mt-2 text-sm text-gray-700">
             Create and manage your application documentation projects
           </p>
         </div>
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        <div className="mt-4 sm:mt-0 sm:flex space-x-4 items-center">
+          <button
+            onClick={() => {
+              useAuthStore.getState().logout();
+              navigate('/signin');
+            }}
+            className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+          >
+            Logout
+          </button>
           <button
             onClick={() => setIsModalOpen(true)}
             className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
