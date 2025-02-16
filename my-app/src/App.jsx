@@ -17,7 +17,13 @@ function App() {
           <Routes>
             <Route 
               path="/" 
-              element={isAuthenticated ? <ProjectList /> : <Navigate to="/signin" />} 
+              element={
+                isAuthenticated ? (
+                  <ProjectList />
+                ) : (
+                  <Navigate to="/signin" replace state={{ from: location }} />
+                )
+              } 
             />
             <Route 
               path="/project/:projectId/*" 

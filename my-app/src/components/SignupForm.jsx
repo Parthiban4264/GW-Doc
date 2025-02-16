@@ -111,9 +111,9 @@ const SignupForm = () => {
             </button>
             <div className="text-sm text-center">
               <span className="text-gray-600">Already have an account? </span>
-              <a href="/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link to="/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
                 Sign in
-              </a>
+              </Link>
             </div>
           </div>
         </form>
