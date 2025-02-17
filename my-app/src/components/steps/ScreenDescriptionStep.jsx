@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 const DraggableScreen = ({ id, index, image, description, moveScreen, onDescriptionChange }) => {
@@ -25,10 +26,11 @@ const DraggableScreen = ({ id, index, image, description, moveScreen, onDescript
   return (
     <div
       ref={(node) => drag(drop(node))}
-      className={`flex space-x-6 p-4 bg-white rounded-lg ${
+      className={`flex items-center space-x-6 p-4 bg-white rounded-lg ${
         isDragging ? 'opacity-50' : ''
       }`}
     >
+      <Bars3Icon className="h-6 w-6 text-gray-400 cursor-move" />
       <div className="w-1/3">
         <img
           src={image.preview}
