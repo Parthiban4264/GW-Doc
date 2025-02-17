@@ -17,7 +17,7 @@ function StepNavigation({ steps, currentStep }) {
             <li key={step.id} className={index !== 0 ? 'ml-8 relative' : ''}>
               {index !== 0 && (
                 <div className="absolute left-0 -translate-x-full top-1/2 -translate-y-1/2 w-8 flex items-center" aria-hidden="true">
-                  <div className={`h-0.5 w-full ${isCompleted ? 'bg-indigo-600' : 'bg-gray-200'}`} />
+                  <div className={`h-0.5 w-full mx-1 ${isCompleted ? 'bg-indigo-600' : 'bg-gray-200'}`} />
                 </div>
               )}
               <div className="relative flex items-center">

@@ -2036,3 +2036,24 @@
 
 # 2025-02-16 20:00:13.828642
 +can you update the `created_by` name to the current user name on `ProjectList` table
+
+# 2025-02-17 09:25:45.385340
++add my-app/src backend/routes backend/uploads backend/db.js backend/server.js
+
+# 2025-02-17 09:25:52.045430
++y
+
+# 2025-02-17 09:26:18.444869
++/add my-app/src
+
+# 2025-02-17 09:26:29.136758
++fix this error Uncaught DataCloneError: Failed to execute 'replaceState' on 'History': Location object could not be cloned.
+
+# 2025-02-17 17:15:00.396984
++/add my-app/src/components/steps/ScreenDescriptionStep.jsx
+
+# 2025-02-17 17:15:47.496744
++can you add a icon for user know that it has a draggable feature
+
+# 2025-02-17 17:16:12.048093
++n
