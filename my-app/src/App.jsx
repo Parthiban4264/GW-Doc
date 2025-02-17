@@ -21,7 +21,7 @@ function App() {
                 isAuthenticated ? (
                   <ProjectList />
                 ) : (
-                  <Navigate to="/signin" replace state={{ from: location }} />
+                  <Navigate to="/signin" replace state={{ from: window.location.pathname }} />
                 )
               } 
             />
